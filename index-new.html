@@ -1,841 +1,1029 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snux Dz - متجر إلكتروني</title>
 
-  <title>Snux Dz | تسوق بذكاء وعيش الأفضل</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-  <meta name="description"
-        content="Snux Dz - متجر إلكتروني للتسوق بسهولة وأمان.">
+body {
+    font-family: Arial, sans-serif;
+    background: #02030a;
+    color: white;
+    min-height: 100vh;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+/* =========================
+   INTRO
+========================= */
 
-    body {
-      font-family: Arial, Tahoma, sans-serif;
-      background: #f5fff8;
-      color: #123b29;
-      overflow-x: hidden;
-    }
+#intro {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background:
+        radial-gradient(circle at center, #064d2b 0%, #02140d 45%, #000 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    transition: opacity 1s ease, visibility 1s ease;
+}
 
-    /* =========================
-       شاشة الدخول
-    ========================= */
+#intro.hide {
+    opacity: 0;
+    visibility: hidden;
+}
 
-    #intro {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background:
-        radial-gradient(circle at center, #0c5f38 0%, #06351f 45%, #02170d 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      overflow: hidden;
-      transition: opacity 1.2s ease, visibility 1.2s ease;
-    }
+.welcome {
+    position: relative;
+    z-index: 10;
+    animation: welcomeIn 2s ease;
+}
 
-    #intro.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
+.welcome h1 {
+    font-size: clamp(32px, 7vw, 75px);
+    color: #5cff9b;
+    text-shadow:
+        0 0 10px #00ff66,
+        0 0 30px #00ff66,
+        0 0 60px #00ff66;
+}
 
-    .intro-content {
-      position: relative;
-      z-index: 5;
-      animation: introZoom 2s ease;
-      padding: 20px;
-    }
+.welcome p {
+    margin-top: 20px;
+    font-size: clamp(18px, 4vw, 30px);
+    color: white;
+}
 
-    .intro-small {
-      font-size: 20px;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: .5s;
-    }
-
-    .intro-title {
-      font-size: clamp(42px, 8vw, 90px);
-      font-weight: 900;
-      margin-top: 15px;
-      color: #ffffff;
-      text-shadow:
-        0 0 10px rgba(255,255,255,.5),
-        0 0 30px rgba(0,255,120,.5);
-      opacity: 0;
-      animation: titleIn 1.5s ease forwards;
-      animation-delay: 1s;
-    }
-
-    .intro-subtitle {
-      font-size: clamp(20px, 4vw, 35px);
-      margin-top: 20px;
-      color: #baffd4;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 2s;
-    }
-
-    @keyframes introZoom {
-      from {
-        transform: scale(.7);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    @keyframes titleIn {
-      from {
+@keyframes welcomeIn {
+    from {
         opacity: 0;
         transform: scale(.7);
-      }
-      to {
+    }
+    to {
         opacity: 1;
         transform: scale(1);
-      }
     }
+}
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
+/* Fireworks */
 
-    /* =========================
-       الألعاب النارية
-    ========================= */
-
-    .firework {
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: white;
-      box-shadow:
+.firework {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #fff;
+    border-radius: 50%;
+    animation: explode 2.5s infinite;
+    box-shadow:
         0 0 10px #fff,
-        0 0 20px #50ff9a;
-      animation: explode 2s infinite;
-      opacity: 0;
-    }
+        0 0 20px #00ff66,
+        0 0 40px #00ff66;
+}
 
-    .f1 { left: 15%; top: 25%; animation-delay: 2.5s; }
-    .f2 { left: 80%; top: 20%; animation-delay: 3s; }
-    .f3 { left: 25%; top: 70%; animation-delay: 3.5s; }
-    .f4 { left: 75%; top: 70%; animation-delay: 4s; }
-    .f5 { left: 50%; top: 15%; animation-delay: 4.5s; }
+.firework:nth-child(1) {
+    left: 15%;
+    top: 25%;
+}
 
-    @keyframes explode {
-      0% {
-        opacity: 0;
+.firework:nth-child(2) {
+    left: 80%;
+    top: 25%;
+    animation-delay: .5s;
+}
+
+.firework:nth-child(3) {
+    left: 30%;
+    top: 70%;
+    animation-delay: 1s;
+}
+
+.firework:nth-child(4) {
+    left: 70%;
+    top: 65%;
+    animation-delay: 1.5s;
+}
+
+.firework:nth-child(5) {
+    left: 50%;
+    top: 20%;
+    animation-delay: .8s;
+}
+
+@keyframes explode {
+    0% {
         transform: scale(1);
-        box-shadow: 0 0 5px white;
-      }
-
-      20% {
         opacity: 1;
-      }
-
-      60% {
-        transform: scale(25);
-        opacity: .8;
         box-shadow:
-          0 0 10px white,
-          20px 0 10px #6cffad,
-          -20px 0 10px #6cffad,
-          0 20px 10px white,
-          0 -20px 10px #6cffad;
-      }
+            0 0 10px white,
+            0 0 20px #00ff66;
+    }
 
-      100% {
+    60% {
+        transform: scale(30);
         opacity: 0;
-        transform: scale(35);
-      }
+        box-shadow:
+            0 0 20px white,
+            0 0 60px #00ff66,
+            0 0 100px #00ff66;
     }
 
-    /* =========================
-       المتجر
-    ========================= */
-
-    #store {
-      display: none;
-    }
-
-    #store.visible {
-      display: block;
-      animation: storeIn 1s ease;
-    }
-
-    @keyframes storeIn {
-      from {
+    100% {
+        transform: scale(1);
         opacity: 0;
-        transform: translateY(20px);
-      }
+    }
+}
 
-      to {
-        opacity: 1;
+/* =========================
+   MAIN STORE
+========================= */
+
+#store {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(0,0,10,.55),
+            rgba(0,0,10,.72)
+        ),
+        url("https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=2000&q=90")
+        center/cover fixed;
+}
+
+/* Stars */
+
+.stars,
+.stars2,
+.stars3 {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.stars {
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(1px 1px at 100px 80px, white, transparent),
+        radial-gradient(2px 2px at 250px 150px, white, transparent),
+        radial-gradient(1px 1px at 400px 200px, white, transparent),
+        radial-gradient(2px 2px at 600px 100px, white, transparent);
+    background-size: 700px 400px;
+    animation: moveStars 30s linear infinite;
+    opacity: .8;
+}
+
+.stars2 {
+    background-image:
+        radial-gradient(1px 1px at 50px 100px, #8affbb, transparent),
+        radial-gradient(2px 2px at 300px 300px, white, transparent),
+        radial-gradient(1px 1px at 500px 250px, white, transparent);
+    background-size: 600px 500px;
+    animation: moveStars 50s linear infinite reverse;
+    opacity: .5;
+}
+
+.stars3 {
+    background-image:
+        radial-gradient(1px 1px at 150px 250px, white, transparent),
+        radial-gradient(2px 2px at 450px 350px, #5cff9b, transparent);
+    background-size: 800px 600px;
+    animation: moveStars 70s linear infinite;
+    opacity: .4;
+}
+
+@keyframes moveStars {
+    from {
         transform: translateY(0);
-      }
     }
 
-    /* الرأس */
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid #d8f2e2;
-      box-shadow: 0 3px 20px rgba(0,0,0,.07);
+    to {
+        transform: translateY(400px);
     }
+}
 
-    .topbar {
-      max-width: 1250px;
-      margin: auto;
-      min-height: 75px;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
+/* =========================
+   HEADER
+========================= */
+
+header {
+    position: relative;
+    z-index: 20;
+    background: rgba(0, 10, 7, .88);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(80,255,150,.25);
+    padding: 15px 5%;
+}
+
+.header-inner {
+    max-width: 1400px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #42ff8a;
+    text-shadow: 0 0 15px #00ff66;
+    white-space: nowrap;
+}
+
+.search {
+    flex: 1;
+}
+
+.search input {
+    width: 100%;
+    padding: 13px 18px;
+    border-radius: 30px;
+    border: 1px solid #42ff8a;
+    background: rgba(0,0,0,.5);
+    color: white;
+    outline: none;
+    font-size: 15px;
+}
+
+.search input::placeholder {
+    color: #bbb;
+}
+
+.header-btn {
+    border: none;
+    border-radius: 25px;
+    padding: 12px 17px;
+    color: white;
+    background: #087a3d;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+    white-space: nowrap;
+}
+
+.header-btn:hover {
+    background: #00b957;
+    transform: translateY(-2px);
+}
+
+.cart-count {
+    background: #ff3b3b;
+    border-radius: 50%;
+    padding: 2px 7px;
+    margin-right: 4px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    position: relative;
+    z-index: 2;
+    min-height: 360px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    padding: 60px 20px;
+}
+
+.hero-content {
+    background: rgba(0,0,0,.38);
+    backdrop-filter: blur(5px);
+    padding: 35px;
+    border-radius: 25px;
+    border: 1px solid rgba(90,255,160,.2);
+}
+
+.hero h2 {
+    font-size: clamp(30px, 6vw, 65px);
+    color: #58ff9a;
+    text-shadow: 0 0 25px #00ff66;
+}
+
+.hero p {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #ddd;
+}
+
+/* =========================
+   CATEGORIES + SEARCH
+========================= */
+
+.shop-area {
+    position: relative;
+    z-index: 5;
+    max-width: 1400px;
+    margin: auto;
+    padding: 20px;
+}
+
+.tools-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(0,0,0,.65);
+    backdrop-filter: blur(12px);
+
+    padding: 12px;
+    border-radius: 18px;
+
+    border: 1px solid rgba(70,255,150,.2);
+
+    overflow-x: auto;
+}
+
+.categories {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    overflow-x: auto;
+}
+
+.categories::-webkit-scrollbar {
+    height: 4px;
+}
+
+.category {
+    border: 1px solid #35e87d;
+    background: rgba(0,0,0,.55);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: .3s;
+}
+
+.category:hover,
+.category.active {
+    background: #0aa94f;
+    box-shadow: 0 0 15px rgba(0,255,100,.5);
+}
+
+.mini-search {
+    min-width: 190px;
+}
+
+.mini-search input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #35e87d;
+    background: #050a08;
+    color: white;
+    outline: none;
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.products-title {
+    margin: 30px 0 18px;
+    font-size: 28px;
+    color: #5cff9b;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background: rgba(4,10,8,.88);
+    border: 1px solid rgba(65,255,140,.25);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: .3s;
+    backdrop-filter: blur(8px);
+}
+
+.product:hover {
+    transform: translateY(-7px);
+    border-color: #42ff8a;
+    box-shadow: 0 10px 35px rgba(0,255,100,.2);
+}
+
+.product img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-info h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.category-name {
+    color: #8affb7;
+    font-size: 13px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #5cff9b;
+    margin: 12px 0;
+}
+
+.buy {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 12px;
+    background: #0a9f49;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.buy:hover {
+    background: #00c85a;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    position: relative;
+    z-index: 5;
+    margin-top: 50px;
+    padding: 30px;
+    text-align: center;
+    background: rgba(0,0,0,.8);
+    color: #aaa;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .header-inner {
+        flex-wrap: wrap;
     }
 
     .logo {
-      color: #079447;
-      font-size: 30px;
-      font-weight: 900;
-      white-space: nowrap;
+        width: 100%;
+        text-align: center;
     }
 
     .search {
-      flex: 1;
-      position: relative;
+        order: 3;
+        width: 100%;
+        flex-basis: 100%;
     }
 
-    .search input {
-      width: 100%;
-      border: 2px solid #d5f0df;
-      border-radius: 30px;
-      padding: 14px 20px;
-      outline: none;
-      font-size: 16px;
-      transition: .3s;
+    .header-btn {
+        flex: 1;
     }
-
-    .search input:focus {
-      border-color: #09a64f;
-      box-shadow: 0 0 0 4px rgba(9,166,79,.1);
-    }
-
-    .cart-button {
-      border: none;
-      background: #079447;
-      color: white;
-      border-radius: 25px;
-      padding: 13px 20px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 15px;
-    }
-
-    /* =========================
-       النجوم
-    ========================= */
 
     .hero {
-      min-height: 470px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-
-      background:
-        radial-gradient(circle at 20% 30%, rgba(0,255,130,.18), transparent 20%),
-        radial-gradient(circle at 80% 20%, rgba(0,255,130,.12), transparent 25%),
-        linear-gradient(180deg, #031d12, #062d1c 60%, #0b482b);
-    }
-
-    /* نجوم */
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-
-      background-image:
-        radial-gradient(circle, white 1px, transparent 1px),
-        radial-gradient(circle, rgba(255,255,255,.😎 1px, transparent 1px),
-        radial-gradient(circle, rgba(130,255,190,.7) 1px, transparent 1px);
-
-      background-size:
-        90px 90px,
-        140px 140px,
-        200px 200px;
-
-      background-position:
-        10px 20px,
-        50px 70px,
-        100px 30px;
-
-      opacity: .8;
+        min-height: 300px;
     }
 
     .hero-content {
-      position: relative;
-      z-index: 2;
-      color: white;
-      padding: 30px;
-    }
-
-    .hero h1 {
-      font-size: clamp(38px, 7vw, 75px);
-      font-weight: 900;
-      text-shadow: 0 5px 25px rgba(0,0,0,.5);
+        padding: 25px 15px;
     }
 
     .hero p {
-      font-size: 22px;
-      margin-top: 15px;
-      color: #d5ffe5;
+        font-size: 16px;
     }
 
-    /* =========================
-       الأقسام
-    ========================= */
+    .tools-row {
+        align-items: stretch;
+    }
 
     .categories {
-      max-width: 1250px;
-      margin: -55px auto 40px;
-      position: relative;
-      z-index: 5;
-      padding: 0 20px;
+        max-width: 100%;
     }
 
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 12px;
-    }
-
-    .category {
-      background: white;
-      border-radius: 18px;
-      padding: 18px 8px;
-      text-align: center;
-      border: 1px solid #d8f2e2;
-      box-shadow: 0 8px 25px rgba(0,0,0,.08);
-      cursor: pointer;
-      transition: .3s;
-    }
-
-    .category:hover {
-      transform: translateY(-7px);
-      background: #effff5;
-      border-color: #09a64f;
-    }
-
-    .category-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .category span {
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    /* =========================
-       المنتجات
-    ========================= */
-
-    .products-section {
-      max-width: 1250px;
-      margin: 50px auto;
-      padding: 0 20px;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 25px;
-    }
-
-    .section-title h2 {
-      font-size: 30px;
-      color: #075f30;
-    }
-
-    .section-title span {
-      color: #777;
+    .mini-search {
+        min-width: 160px;
     }
 
     .products {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
 
-    .product {
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid #e0f2e7;
-      box-shadow: 0 8px 25px rgba(0,0,0,.06);
-      transition: .3s;
-    }
-
-    .product:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0,0,0,.1);
-    }
-
-    .product-image {
-      height: 210px;
-      background:
-        linear-gradient(135deg, #eafff1, #d5f8e2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 70px;
+    .product img {
+        height: 160px;
     }
 
     .product-info {
-      padding: 18px;
+        padding: 10px;
     }
 
     .product-info h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
+        font-size: 15px;
     }
 
-    .product-price {
-      color: #079447;
-      font-size: 20px;
-      font-weight: 900;
-      margin: 10px 0;
+    .price {
+        font-size: 17px;
     }
-
-    .buy {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 12px;
-      background: #079447;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 15px;
-    }
-
-    .buy:hover {
-      background: #057337;
-    }
-
-    /* =========================
-       الفوتر
-    ========================= */
-
-    footer {
-      background: #06351f;
-      color: white;
-      text-align: center;
-      padding: 35px 20px;
-      margin-top: 60px;
-    }
-
-    footer strong {
-      color: #69ffa7;
-      font-size: 23px;
-    }
-
-    /* =========================
-       الهاتف
-    ========================= */
-
-    @media (max-width: 900px) {
-      .category-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .topbar {
-        flex-wrap: wrap;
-      }
-
-      .search {
-        order: 3;
-        flex-basis: 100%;
-      }
-    }
-
-    @media (max-width: 550px) {
-      .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .products {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        min-height: 400px;
-      }
-
-      .logo {
-        font-size: 25px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =========================
-       مقدمة الموقع
-  ========================== -->
+<!-- INTRO -->
 
-  <section id="intro">
+<div id="intro">
 
-    <div class="firework f1"></div>
-    <div class="firework f2"></div>
-    <div class="firework f3"></div>
-    <div class="firework f4"></div>
-    <div class="firework f5"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
 
-    <div class="intro-content">
-
-      <div class="intro-small">
-        أهلاً وسهلاً بك
-      </div>
-
-      <h1 class="intro-title">
-        مرحبًا بك في عالم Snux Dz
-      </h1>
-
-      <div class="intro-subtitle">
-        تسوّق بذكاء وعيش الأفضل
-      </div>
-
+    <div class="welcome">
+        <h1>مرحبًا بك في عالم Snux Dz</h1>
+        <p>تسوّق بذكاء وعيش الأفضل</p>
     </div>
 
-  </section>
+</div>
 
 
-  <!-- =========================
-       المتجر
-  ========================== -->
+<!-- STORE -->
 
-  <div id="store">
+<div id="store">
 
-    <!-- الرأس -->
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+
+    <!-- HEADER -->
 
     <header>
 
-      <div class="topbar">
+        <div class="header-inner">
 
-        <div class="logo">
-          Snux Dz
+            <div class="logo">
+                Snux Dz
+            </div>
+
+            <div class="search">
+                <input
+                    type="text"
+                    id="mainSearch"
+                    placeholder="🔎 ابحث عن منتج..."
+                >
+            </div>
+
+            <button class="header-btn" onclick="showCart()">
+                🛒 السلة
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+            <button class="header-btn" onclick="openDashboard()">
+                ⚙️ لوحة التحكم
+            </button>
+
         </div>
-
-        <div class="search">
-          <input
-            type="search"
-            id="searchInput"
-            placeholder="ابحث عن منتج..."
-          >
-        </div>
-
-        <button class="cart-button">
-          🛒 السلة
-        </button>
-
-      </div>
 
     </header>
 
 
-    <!-- النجوم -->
+    <!-- HERO -->
 
     <section class="hero">
 
-      <div class="hero-content">
+        <div class="hero-content">
 
-        <h1>
-          Snux Dz
-        </h1>
+            <h2>Snux Dz</h2>
 
-        <p>
-          تسوّق بذكاء وعيش الأفضل
-        </p>
+            <p>
+                كل ما تحتاجه... في مكان واحد
+            </p>
 
-      </div>
+        </div>
 
     </section>
 
 
-    <!-- الأقسام -->
+    <!-- SHOP -->
 
-    <section class="categories">
+    <main class="shop-area">
 
-      <div class="category-grid">
+        <!-- CATEGORIES + SEARCH -->
 
-        <div class="category">
-          <div class="category-icon">👕</div>
-          <span>الملابس</span>
+        <div class="tools-row">
+
+            <div class="categories">
+
+                <button class="category active" data-category="all">
+                    الكل
+                </button>
+
+                <button class="category" data-category="ملابس">
+                    👕 ملابس
+                </button>
+
+                <button class="category" data-category="إلكترونيات">
+                    📱 إلكترونيات
+                </button>
+
+                <button class="category" data-category="منزل">
+                    🏠 أدوات منزلية
+                </button>
+
+                <button class="category" data-category="ألعاب">
+                    🎮 ألعاب
+                </button>
+
+                <button class="category" data-category="إكسسوارات">
+                    💎 إكسسوارات
+                </button>
+
+                <button class="category" data-category="عطور">
+                    🌹 عطور
+                </button>
+
+            </div>
+
+            <div class="mini-search">
+
+                <input
+                    type="text"
+                    id="categorySearch"
+                    placeholder="بحث سريع..."
+                >
+
+            </div>
+
         </div>
 
-        <div class="category">
-          <div class="category-icon">📱</div>
-          <span>الإلكترونيات</span>
-        </div>
 
-        <div class="category">
-          <div class="category-icon">🏠</div>
-          <span>أدوات منزلية</span>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">🎮</div>
-          <span>الألعاب</span>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">🎧</div>
-          <span>الإكسسوارات</span>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">🌸</div>
-          <span>العطور</span>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">✨</div>
-          <span>متنوع</span>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- المنتجات -->
-
-    <section class="products-section">
-
-      <div class="section-title">
-
-        <h2>
-          منتجات مميزة
+        <h2 class="products-title">
+            🛍️ المنتجات
         </h2>
 
-        <span>
-          اكتشف منتجاتنا
-        </span>
 
-      </div>
+        <div class="products" id="products">
 
+            <!-- PRODUCT 1 -->
 
-      <div class="products" id="products">
+            <div class="product" data-category="ملابس" data-name="قميص رياضي">
 
-        <article class="product">
+                <img
+                    src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80"
+                    alt="قميص"
+                >
 
-          <div class="product-image">
-            🎧
-          </div>
+                <div class="product-info">
 
-          <div class="product-info">
+                    <h3>قميص رياضي</h3>
 
-            <h3>
-              سماعات لاسلكية
-            </h3>
+                    <div class="category-name">
+                        ملابس
+                    </div>
 
-            <div class="product-price">
-              2500 دج
+                    <div class="price">
+                        2500 دج
+                    </div>
+
+                    <button class="buy" onclick="addToCart()">
+                        أضف إلى السلة
+                    </button>
+
+                </div>
+
             </div>
 
-            <button class="buy">
-              أضف إلى السلة
-            </button>
 
-          </div>
+            <!-- PRODUCT 2 -->
 
-        </article>
+            <div class="product" data-category="إلكترونيات" data-name="سماعات لاسلكية">
 
+                <img
+                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"
+                    alt="سماعات"
+                >
 
-        <article class="product">
+                <div class="product-info">
 
-          <div class="product-image">
-            ⌚
-          </div>
+                    <h3>سماعات لاسلكية</h3>
 
-          <div class="product-info">
+                    <div class="category-name">
+                        إلكترونيات
+                    </div>
 
-            <h3>
-              ساعة ذكية
-            </h3>
+                    <div class="price">
+                        4500 دج
+                    </div>
 
-            <div class="product-price">
-              4500 دج
+                    <button class="buy" onclick="addToCart()">
+                        أضف إلى السلة
+                    </button>
+
+                </div>
+
             </div>
 
-            <button class="buy">
-              أضف إلى السلة
-            </button>
 
-          </div>
+            <!-- PRODUCT 3 -->
 
-        </article>
+            <div class="product" data-category="إكسسوارات" data-name="ساعة ذكية">
 
+                <img
+                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"
+                    alt="ساعة"
+                >
 
-        <article class="product">
+                <div class="product-info">
 
-          <div class="product-image">
-            🎒
-          </div>
+                    <h3>ساعة ذكية</h3>
 
-          <div class="product-info">
+                    <div class="category-name">
+                        إكسسوارات
+                    </div>
 
-            <h3>
-              حقيبة ظهر
-            </h3>
+                    <div class="price">
+                        6500 دج
+                    </div>
 
-            <div class="product-price">
-              3200 دج
+                    <button class="buy" onclick="addToCart()">
+                        أضف إلى السلة
+                    </button>
+
+                </div>
+
             </div>
 
-            <button class="buy">
-              أضف إلى السلة
-            </button>
 
-          </div>
+            <!-- PRODUCT 4 -->
 
-        </article>
+            <div class="product" data-category="منزل" data-name="مصباح ذكي">
 
+                <img
+                    src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80"
+                    alt="مصباح"
+                >
 
-        <article class="product">
+                <div class="product-info">
 
-          <div class="product-image">
-            👟
-          </div>
+                    <h3>مصباح ذكي</h3>
 
-          <div class="product-info">
+                    <div class="category-name">
+                        أدوات منزلية
+                    </div>
 
-            <h3>
-              حذاء رياضي
-            </h3>
+                    <div class="price">
+                        3200 دج
+                    </div>
 
-            <div class="product-price">
-              5500 دج
+                    <button class="buy" onclick="addToCart()">
+                        أضف إلى السلة
+                    </button>
+
+                </div>
+
             </div>
 
-            <button class="buy">
-              أضف إلى السلة
-            </button>
 
-          </div>
+            <!-- PRODUCT 5 -->
 
-        </article>
+            <div class="product" data-category="ألعاب" data-name="يد تحكم للألعاب">
 
-      </div>
+                <img
+                    src="https://images.unsplash.com/photo-1592840062661-0c4f1b7a1b8d?auto=format&fit=crop&w=600&q=80"
+                    alt="يد تحكم"
+                >
 
-    </section>
+                <div class="product-info">
+
+                    <h3>يد تحكم للألعاب</h3>
+
+                    <div class="category-name">
+                        ألعاب
+                    </div>
+
+                    <div class="price">
+                        5500 دج
+                    </div>
+
+                    <button class="buy" onclick="addToCart()">
+                        أضف إلى السلة
+                    </button>
+
+                </div>
+
+            </div>
 
 
-    <!-- الفوتر -->
+            <!-- PRODUCT 6 -->
+
+            <div class="product" data-category="عطور" data-name="عطر فاخر">
+
+                <img
+                    src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80"
+                    alt="عطر"
+                >
+
+                <div class="product-info">
+
+                    <h3>عطر فاخر</h3>
+
+                    <div class="category-name">
+                        عطور
+                    </div>
+
+                    <div class="price">
+                        7000 دج
+                    </div>
+
+                    <button class="buy" onclick="addToCart()">
+                        أضف إلى السلة
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
 
     <footer>
-
-      <strong>
-        Snux Dz
-      </strong>
-
-      <p style="margin-top:10px;">
-        تسوّق بذكاء وعيش الأفضل
-      </p>
-
+        © 2026 Snux Dz — جميع الحقوق محفوظة
     </footer>
 
-  </div>
+</div>
 
 
-  <script>
+<script>
 
-    /*
-      إظهار المتجر بعد المقدمة
-    */
-
-    setTimeout(function() {
-
-      document.getElementById("intro").classList.add("hidden");
-
-      document.getElementById("store").classList.add("visible");
-
-    }, 7000);
+let cart = 0;
 
 
-    /*
-      البحث عن المنتجات
-    */
+/* INTRO */
 
-    const searchInput =
-      document.getElementById("searchInput");
+setTimeout(function() {
 
-    const products =
-      document.querySelectorAll(".product");
+    document.getElementById("intro").classList.add("hide");
 
-    searchInput.addEventListener("input", function() {
+}, 6500);
 
-      const search =
-        this.value.toLowerCase().trim();
 
-      products.forEach(function(product) {
+/* CART */
 
-        const name =
-          product.querySelector("h3").textContent.toLowerCase();
+function addToCart() {
 
-        if (name.includes(search)) {
-          product.style.display = "";
+    cart++;
+
+    document.getElementById("cartCount").textContent = cart;
+
+    alert("تمت إضافة المنتج إلى السلة 🛒");
+
+}
+
+
+function showCart() {
+
+    alert("عدد المنتجات في السلة: " + cart);
+
+}
+
+
+/* DASHBOARD */
+
+function openDashboard() {
+
+    alert(
+        "لوحة التحكم الخاصة بصاحب المتجر سيتم تجهيزها في الخطوة القادمة."
+    );
+
+}
+
+
+/* FILTER PRODUCTS */
+
+const categoryButtons =
+    document.querySelectorAll(".category");
+
+const products =
+    document.querySelectorAll(".product");
+
+function filterProducts(category) {
+
+    products.forEach(function(product) {
+
+        if (
+            category === "all" ||
+            product.dataset.category === category
+        ) {
+
+            product.style.display = "";
+
         } else {
-          product.style.display = "none";
+
+            product.style.display = "none";
+
         }
 
-      });
+    });
+
+}
+
+
+categoryButtons.forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+        categoryButtons.forEach(function(btn) {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        filterProducts(
+            button.dataset.category
+        );
+
+    });
+
+});
+
+
+/* SEARCH */
+
+function searchProducts(value) {
+
+    value = value.toLowerCase().trim();
+
+    products.forEach(function(product) {
+
+        const name =
+            product.dataset.name.toLowerCase();
+
+        const category =
+            product.dataset.category.toLowerCase();
+
+        if (
+            name.includes(value) ||
+            category.includes(value)
+        ) {
+
+            product.style.display = "";
+
+        } else {
+
+            product.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+document
+    .getElementById("mainSearch")
+    .addEventListener("input", function() {
+
+        searchProducts(this.value);
 
     });
 
 
-    /*
-      زر إضافة للسلة - مؤقتًا
-    */
+document
+    .getElementById("categorySearch")
+    .addEventListener("input", function() {
 
-    document.querySelectorAll(".buy").forEach(function(button) {
-
-      button.addEventListener("click", function() {
-
-        alert("تمت إضافة المنتج إلى السلة 🛒");
-
-      });
+        searchProducts(this.value);
 
     });
 
-  </script>
+</script>
 
 </body>
 </html>
-
-
